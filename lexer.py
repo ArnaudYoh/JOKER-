@@ -29,10 +29,10 @@ def lexProgram():
         except IndexError:
             print("Invalid program")
         if suit!='♦' and currentlyLexingName:
-            lexedProgram.append(Token(TokenTypes.varname, valueSoFar))
+            lexedProgram.append(Token(TokenTypes.Varname, valueSoFar))
             valueSoFar=None
         elif suit!='♥' and currentlyLexingNumber:
-            lexedProgram.append(Token(TokenTypes.number, valueSoFar))
+            lexedProgram.append(Token(TokenTypes.Number, valueSoFar))
             valueSoFar=None
         # if it's a number, lex it all
         if suit=='♥':
@@ -59,6 +59,6 @@ class Token(object):
 
 
 class TokenTypes(Enum):
-    varname=1
-    number=2
+    Varname=1
+    Number=2
     # TODO the rest
