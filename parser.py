@@ -10,6 +10,7 @@ rawProgram = [c for c in rawProgram if not c.isspace()]
 # list of tokens in program
 parsedProgram=[]
 
+
 def parseProgram():
     # if not in the middle of parsing a number
     currentlyParsingNumber=False
@@ -21,6 +22,9 @@ def parseProgram():
     for i in range(0,len(rawProgram)):
         try:
             value=rawProgram[i]
+            if rawProgram[i+1]=='0':
+                value+='0'
+                i+=1
             suit=rawProgram[i+1]
         except IndexError:
             print("Invalid program")
@@ -32,23 +36,27 @@ def parseProgram():
             valueSoFar=None
         # if it's a number, parse it all
         if suit=='♥':
+            thisValue=# TODO parse value
             if valueSoFar==None:
-                valueSoFar= 1#TODO replace with newly parsed value
-            valueSoFar = valueSoFar*13 + 1#TODO replace with newly parsed value
+                valueSoFar= thisValue#TODO replace with newly parsed value
+            valueSoFar = valueSoFar*13 + thisValue#TODO replace with newly parsed value
         # if it's a var name, parse it all
         elif suit=='♦':
+            thisValue=# TODO parse value
             if valueSoFar==None:
-                valueSoFar= 1#TODO replace with newly parsed value
-            valueSoFar = valueSoFar + 1#TODO replace with  newly parsed value
+                valueSoFar= thisValue#TODO replace with newly parsed value
+            valueSoFar = valueSoFar + thisValue#TODO replace with  newly parsed value
         else:
-            # TODO: look up card in card mapping and return the appropriate token
+            thisOne=# TODO: look up card in card mapping and return the appropriate token
             parsedProgram.append(Token(thisone))
         i+=1
+
 
 class Token(object):
     def __init__(self, tokenType, tokenValue=None):
         self.tokenType=tokenType
         self.tokenValue=tokenValue
+
 
 class TokenTypes(Enum):
     varname=1
