@@ -18,19 +18,41 @@
 			The Joker Interpreter
 		</div>
 		<div class="container-fluid">
-			<form action="">
+			<form action="python">
 				<div class="row">
-					<div class="col-md-4 col-md-offset-1">
-						<input type="textbox" class="myinput">
-			
-					</div>	
+					<!-- <div class="col-md-4 col-md-offset-1"> -->
+						<p style="text-align:center">Code</p>
+						<textarea rows="10" cols="75" name ="input" class="myinput">
+						</textarea>	
+					<!-- </div>	 -->
 				</div>
 			</form>
-			<div class="row">
-				<button class="btn btn-lg btn-primary"> 
+			<div class="row launch-button">
+				<button class="launch-button btn btn-sm btn-primary"> 
 					<p class="btntext">GAME !</p>
 				</button>	 
-			</div>	
+			</div>
+			<div class="row">
+				<div class="col-md-1 col-md-offset-1">
+					<button class="suit-button btn btn-primary"> 
+					<p class="btntext">♠ Spade</p>
+					</button>
+				</div>
+				<div class="col-md-2 col-md-offset-1">
+					<button class="suit-button btn btn-primary"> 
+					<p class="btntext">♣ Club</p>
+					</button>
+				</div>
+				<div class="col-md-1 col-md-offset-2">
+					<button class="suit-button btn btn-sm btn-danger"> 
+					<p class="btntext">♥ Heart</p>
+					</button>
+				</div>
+				<div class="col-md-2 col-md-offset-1">
+					<button class="suit-button btn btn-sm btn-danger"> 
+					<p class="btntext">♦ Diamond</p>
+					</button>
+				</div>
 		</div>
 
 	</body>

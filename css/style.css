@@ -2,14 +2,36 @@ body {
 	text-align: center; 
 }
 
-button {
+p {
+	font-family: 'Actor'; 
+	margin-top: 2%; 
+	font-size: 25px; 
+	font-weight: 600; 
+}
+
+.suit-button{
 	display: inline-block;
-	width: 105px; 
+	width: 145px; 
+	height: 50px; 
+}
+
+.launch-button{
+	/*margin-top: 2%; */
+	margin-bottom: 2%; 
+	height: 50px; 
+
+}
+
+.myinput{ 
+	/*margin-top: 4%; */
+	/*margin-bottom: 1%; */
+	overflow-y: scroll; 
+	resize: none;
 }
 
 .title {
 	font-family: 'Actor';
-	margin-top : 2%;
+	margin-top : 1%;
 	font-size: 45px;
 	font-weight: bold;  
 }
@@ -46,11 +68,11 @@ button {
 }
 
 .mybtn:active{
-	top: 3px; 
+	top: 4px; 
 }
 
 .active{
-	top: 3px;
+	top: 4px;
 }
 
 .divider{
@@ -87,13 +109,6 @@ button {
 	margin-top: 10%;  
 }
 
-p {
-	font-family: 'Actor'; 
-	margin-top: 10%; 
-	margin-bottom: 3%; 
-	font-size: 25px; 
-	font-weight: 600; 
-}
 
 .result {
 	margin-top: 10%; 
