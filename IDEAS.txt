@@ -19,10 +19,20 @@ turing complete ?
 DECK of cards : normal one ( ACE TO KING/ SPACE to HEART) 
 	- LIST OF ALL CARDS: 
 		- 13 cards : numbers, base 13  
-		- 1 card : char() 
-		- 
-
-		- Arithm functions :  ADD, SUB, MULT, DIV, MOD
-		- Vars assignmts : =, >, <, ==,  
+		 
+		- 2 Arithm functions :  ADD, SUB, 
+		- 4 Vars assignmts : =, >, <, ==,  
+		- 3 logical fun : OR, NOT, AND,
+		- 1 card : char()
+		
 		- 13 cards : Vars : set of cards to define names. 
-		-  
+
+		- 2 Read/Print : R, P,  
+		- 2 fun : def/ call
+		- 2 Brackets : {, },
+		- 1 if : (goto)
+		- 1 loop (for/while) (goto)
+		- 1 return stat, 
+
+	Structures : 
+		- 
