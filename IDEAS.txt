@@ -11,3 +11,18 @@ Ideas : //- Sing to code.
 		- Esperanto
 		- C.O.D.E.P.L.A.Y to code
 		- IL|li code :p 
+
+
+
+turing complete ? 
+
+DECK of cards : normal one ( ACE TO KING/ SPACE to HEART) 
+	- LIST OF ALL CARDS: 
+		- 13 cards : numbers, base 13  
+		- 1 card : char() 
+		- 
+
+		- Arithm functions :  ADD, SUB, MULT, DIV, MOD
+		- Vars assignmts : =, >, <, ==,  
+		- 13 cards : Vars : set of cards to define names. 
+		-  
