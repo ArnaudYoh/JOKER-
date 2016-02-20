@@ -1,0 +1,101 @@
+body {
+	text-align: center; 
+}
+
+button {
+	display: inline-block;
+	width: 105px; 
+}
+
+.title {
+	font-family: 'Actor';
+	margin-top : 2%;
+	font-size: 45px;
+	font-weight: bold;  
+}
+
+.secondtlt{
+	font-family: 'Actor'; 
+	margin-top: 1%; 
+	font-size: 30px; 
+	font-weight: bold;
+}
+
+.temp {
+	font-family: 'Actor'; 
+	margin-top: 4%; 
+	font-size: 25px; 
+	font-weight: bold;	
+}
+
+.players {
+	margin-top: 17%; 
+}
+
+.mybtn{
+	transition:all .03s linear;
+    position:relative;
+    outline:medium none;
+    -moz-outline-style:none;
+    border:0px;
+}
+
+.mybtn:focus{
+	outline:medium none;
+    -moz-outline-style:none;
+}
+
+.mybtn:active{
+	top: 3px; 
+}
+
+.active{
+	top: 3px;
+}
+
+.divider{
+	display: inline-block;
+	height: auto; 
+	width: 8%; 
+}
+
+ .btn-success {
+    box-shadow:0 0 0 1px #5cb85c inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 4px 0 0 #51b651, 0 4px 0 1px rgba(0,0,0,0.4), 0 4px 4px 1px rgba(0,0,0,0.5);
+    background-color:#5cb85c;
+}
+
+.btn-primary {
+    box-shadow:0 0 0 1px #428bca inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 4px 0 0 #357ebd, 0 4px 0 1px rgba(0,0,0,0.4), 0 4px 4px 1px rgba(0,0,0,0.5);
+    background-color:#428bca;
+}
+
+.btn-danger {
+    box-shadow:0 0 0 1px #c63702 inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 4px 0 0 #C24032, 0 4px 0 1px rgba(0,0,0,0.4), 0 4px 4px 1px rgba(0,0,0,0.5);
+    background-color:#c63702;
+}
+
+.start {
+	margin-top: 13%; 
+	display: none;
+}
+
+.myhidden {
+	display: none; 
+}
+
+.solo { 
+	margin-top: 10%;  
+}
+
+p {
+	font-family: 'Actor'; 
+	margin-top: 10%; 
+	margin-bottom: 3%; 
+	font-size: 25px; 
+	font-weight: 600; 
+}
+
+.result {
+	margin-top: 10%; 
+}
+
