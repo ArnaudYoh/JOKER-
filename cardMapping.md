@@ -39,6 +39,7 @@ K♠ CLOSE )
 10♠ RETURN
 
 
+K♣ CHR
 
 A♣ DEAL
 
@@ -62,4 +63,4 @@ A♣ DEAL
 
 4,5,7,9,J♠ : IGNORED
 
-4,J,Q,K♣ : IGNORED
+4,J,Q♣ : IGNORED

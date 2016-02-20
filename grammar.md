@@ -1,15 +1,14 @@
 # GRAMMAR
 
-
 Program => (Stmt END)*
 
 Stmt => Assignment | Deal | Funcall | FunDef | If | While | Return
 
 Assignment => VARNAME MathExpr
 
-MathExpr => (VARNAME|VALUE) AddSub
+MathExpr => (VARNAME|VALUE|Funcall) AddSub
 
-AddSub => empty | (PLUS | MINUS) (VARNAME|VALUE) AddSub
+AddSub => empty | (PLUS | MINUS) (VARNAME|VALUE|Funcall) AddSub
 
 Deal => DEAL VARNAME
 
@@ -25,6 +24,6 @@ BoolExprs => NOT? BoolExpr AndOr
 
 AndOr => (AND | OR) NOT? BoolExpr AndOr
 
-BoolExpr => (VARNAME | VALUE) (GT | LT | EQ) (VARNAME | VALUE)
+BoolExpr => (VARNAME | VALUE | Funcall) (GT | LT | EQ) (VARNAME | VALUE|Funcall)
 
-Return => RETURN OPEN VARNAME? CLOSE
+Return => RETURN OPEN (VARNAME | VALUE | Funcall)? CLOSE
