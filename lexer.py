@@ -36,18 +36,27 @@ def lexProgram():
             valueSoFar=None
         # if it's a number, lex it all
         if suit=='♥':
-            thisValue=# TODO lex value
+            try:
+                thisValue=int(value)
+            except ValueError:
+                if value=='A':
+                    thisValue=1
+                elif value=='J':
+                    # TODO: continue
+                    pass
             if valueSoFar==None:
-                valueSoFar= thisValue#TODO replace with newly lexed value
-            valueSoFar = valueSoFar*13 + thisValue#TODO replace with newly lexed value
+                valueSoFar= thisValue
+            valueSoFar = valueSoFar*13 + thisValue
         # if it's a var name, lex it all
         elif suit=='♦':
-            thisValue=# TODO lex value
+            thisValue= None# TODO lex value
             if valueSoFar==None:
-                valueSoFar= thisValue#TODO replace with newly lexed value
-            valueSoFar = valueSoFar + thisValue#TODO replace with newly lexed value
+                valueSoFar = thisValue
+            valueSoFar = valueSoFar + thisValue
         else:
-            thisOne=# TODO: look up card in card mapping and return the appropriate token
+            if value=='A' and suit=='♠':
+                thisOne=TokenTypes.End
+            thisOne=1# TODO: look up card in card mapping and return the appropriate token
             lexedProgram.append(Token(thisone))
         i+=1
 
@@ -56,6 +65,12 @@ class Token(object):
     def __init__(self, tokenType, tokenValue=None):
         self.tokenType=tokenType
         self.tokenValue=tokenValue
+
+    def __str__(self):
+        return str(self.tokenType)+','+str(self.tokenValue)
+
+    def __repr__(self):
+        return str(self)
 
 
 class TokenTypes(Enum):
