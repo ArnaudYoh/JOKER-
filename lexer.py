@@ -32,6 +32,7 @@ def lexProgram(rawProgram, lexedProgram):
                 value+='0'
                 i+=2
             suit="".join(rawProgram[i+1:i+4])
+            print(value)
             if suit=='\x00e&':
                 suit='♥'
             elif suit=='\x00f&':
