@@ -149,4 +149,3 @@ class TokenTypes(Enum):
     Lt=20
 
 lexProgram()
-print(lexedProgram)

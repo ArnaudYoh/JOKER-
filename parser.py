@@ -1,3 +1,5 @@
+import os
+
 from lexer import Token, TokenTypes, lexedProgram as program
 
 indent=0
@@ -315,4 +317,13 @@ class ParsingError(Exception):
 
 
 parseProgram()
-print(outputProgram)
+
+# temporarily save this to a python file
+tempFile = open('temp.py', 'w')
+tempFile.truncate()
+tempFile.write(outputProgram)
+tempFile.close()
+# run the generated python file
+os.system("python temp.py")
+# remove the temporary python file
+os.remove('temp.py')
