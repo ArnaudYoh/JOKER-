@@ -47,6 +47,8 @@ A♣ DEAL
 
 3♣ MINUS -
 
+4♣ TIMES *
+
 5♣ AND & 
 
 6♣ OR |
@@ -63,4 +65,4 @@ A♣ DEAL
 
 4,5,7,9,J♠ : IGNORED
 
-4,J,Q♣ : IGNORED
+J,Q♣ : IGNORED

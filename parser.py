@@ -87,10 +87,12 @@ def parseValue():
 def parseAddSub():
     global outputProgram
     global indent
-    if program[0].tokenType in [TokenTypes.Plus, TokenTypes.Minus]:
+    if program[0].tokenType in [TokenTypes.Plus, TokenTypes.Minus, TokenTypes.Times]:
         symbol = program.pop(0)
         if symbol.tokenType==TokenTypes.Plus:
             outputProgram+='+'
+        elif symbol.tokenType==TokenTypes.Times:
+            outputProgram+='*'
         else:
             outputProgram+='-'
         parseValue()
@@ -130,7 +132,7 @@ def parseFunCall():
     outputProgram+="("
     t=program[0]
     firstTime=True
-    while t.tokenType!=TokenType.Close:
+    while t.tokenType!=TokenTypes.Close:
         if firstTime:
             firstTime=False
         else:
@@ -171,7 +173,7 @@ def parseFunDef():
     global outputProgram
     global indent
     defToken = program.pop(0)
-    if defToken.tokenType!=TokenTypes.Call:
+    if defToken.tokenType!=TokenTypes.Def:
         raise ParsingError(defToken)
     outputProgram+='def '
     fName = program.pop(0)
@@ -184,7 +186,7 @@ def parseFunDef():
     outputProgram+='('
     t=program[0]
     firstTime=True
-    while t.tokenType!=TokenType.Close:
+    while t.tokenType!=TokenTypes.Close:
         if firstTime:
             firstTime=False
         else:
@@ -196,6 +198,7 @@ def parseFunDef():
         if end.tokenType!=TokenTypes.End:
             raise ParsingError(end)
         outputProgram+=pName.tokenValue
+        t=program[0]
     c = program.pop(0)
     if c.tokenType!=TokenTypes.Close:
         raise ParsingError(c)
@@ -204,12 +207,14 @@ def parseFunDef():
     if o.tokenType!=TokenTypes.Open:
         raise ParsingError(o)
     indent+=1
-    while t.tokenType!=TokenType.Close:
+    while t.tokenType!=TokenTypes.Close:
         parseStmt()
         end = program.pop(0)
         if end.tokenType!=TokenTypes.End:
             raise ParsingError(end)
         outputProgram+='\n'
+        t=program[0]
+    print(program)
     c = program.pop(0)
     if c.tokenType!=TokenTypes.Close:
         raise ParsingError(c)
@@ -259,7 +264,7 @@ def parseWhile():
     outputProgram+=':\n'
     indent+=1
     t=program[0]
-    while t.tokenType!=TokenType.Close:
+    while t.tokenType!=TokenTypes.Close:
         parseStmt()
         end = program.pop(0)
         if end.tokenType!=TokenTypes.End:
