@@ -1,3 +1,4 @@
+
 <html>
 	<head>
 		<title>
@@ -19,20 +20,23 @@
 			The Joker Interpreter
 		</div>
 		<div class="container-fluid">
-			<form action="python">
+			<form action="/echo" method="POST">
 				<div class="row">
-					<!-- <div class="col-md-4 col-md-offset-1"> -->
 						<p class>Code</p>
 						<textarea rows="10" cols="75" name ="input" class="myinput" id="input-text"></textarea>	
-
-					<!-- </div>	 -->
 				</div>
-			</form>
-			<div class="row launch-button">
-				<button class="game-button btn btn-sm btn-primary"> 
+			
+				<div class="row launch-button">
+					<button class="game-button btn btn-sm btn-primary"> 
 					<p class="btntext">PLAY !</p>
-				</button>	 
-			</div>
+					</button>	 
+				</div>
+			</form>	
+			<div>
+				{% if input %}
+					Result is : {{ result }}
+				{% endif %}	
+			</div>	
 			<div class="suits row">
 				<div class="col-xs-4 col-xs-offset-1 col-sm-3 col-sm-offset-2 col-md-1 col-md-offset-2 col-lg-1 col-lg-offset-2">
 					<button class="spadebtn suit-button btn btn-death"> 
