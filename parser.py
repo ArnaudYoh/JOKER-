@@ -73,8 +73,9 @@ def parseMathExpr():
 def parseValue():
     global outputProgram
     global indent
-    token = program.pop(0)
+    token = program[0]
     if token.tokenType==TokenTypes.Varname or token.tokenType==TokenTypes.Number:
+        token = program.pop(0)
         outputProgram+=str(token.tokenValue)
     elif token.tokenType==TokenTypes.Call:
         parseFunCall()
@@ -146,18 +147,18 @@ def parseFunCall():
         raise ParsingError(c)
     outputProgram+=')'
 
-# OPEN Value CLOSE
+# OPEN Value END CLOSE
 def parseChr():
+    global outputProgram
+    global indent
     o = program.pop(0)
     if o.tokenType!=TokenTypes.Open:
         raise ParsingError(o)
-    t=program[0]
     outputProgram+='chr('
     parseValue()
     end = program.pop(0)
     if end.tokenType!=TokenTypes.End:
         raise ParsingError(end)
-    outputProgram+=pName.tokenValue
     c = program.pop(0)
     if c.tokenType!=TokenTypes.Close:
         raise ParsingError(c)
@@ -220,21 +221,23 @@ def parseIf():
     global outputProgram
     global indent
     ifToken = program.pop(0)
-    if ifToken.tokenType!=TokenTypes.Deal:
+    if ifToken.tokenType!=TokenTypes.If:
         raise ParsingError(ifToken)
     outputProgram+='if '
     parseBoolExprs()
     o = program.pop(0)
     if o.tokenType!=TokenTypes.Open:
         raise ParsingError(o)
+    outputProgram+=':\n'
     indent+=1
     t=program[0]
-    while t.tokenType!=TokenType.Close:
+    while t.tokenType!=TokenTypes.Close:
         parseStmt()
         end = program.pop(0)
         if end.tokenType!=TokenTypes.End:
             raise ParsingError(end)
         outputProgram+='\n'
+        t=program[0]
     c = program.pop(0)
     if c.tokenType!=TokenTypes.Close:
         raise ParsingError(c)
@@ -253,6 +256,7 @@ def parseWhile():
     o = program.pop(0)
     if o.tokenType!=TokenTypes.Open:
         raise ParsingError(o)
+    outputProgram+=':\n'
     indent+=1
     t=program[0]
     while t.tokenType!=TokenType.Close:
@@ -261,6 +265,7 @@ def parseWhile():
         if end.tokenType!=TokenTypes.End:
             raise ParsingError(end)
         outputProgram+='\n'
+        t=program[0]
     c = program.pop(0)
     if c.tokenType!=TokenTypes.Close:
         raise ParsingError(c)
@@ -339,6 +344,7 @@ class ParsingError(Exception):
 
 
 parseProgram()
+#print(outputProgram)
 
 # temporarily save this to a python file
 tempFile = open('temp.py', 'w')

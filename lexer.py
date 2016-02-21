@@ -91,15 +91,15 @@ def lexProgram():
             elif value=='5' and suit=='♣':
                 thisOne=TokenTypes.And
             elif value=='3' and suit=='♠':
-                thisOne=TokenValue.Def
+                thisOne=TokenTypes.Def
             elif value=='3' and suit=='♣':
                 thisOne=TokenTypes.Minus
             elif value=='2' and suit=='♠':
-                thisOne=TokenValue.Call
+                thisOne=TokenTypes.Call
             elif value=='2' and suit=='♣':
                 thisOne=TokenTypes.Plus
             elif value=='10' and suit=='♣':
-                thisOne=TokenTypesself.Lt
+                thisOne=TokenTypes.Lt
             elif value=='10' and suit=='♠':
                 thisOne==TokenTypes.Return
             
@@ -149,3 +149,4 @@ class TokenTypes(Enum):
     Lt=20
 
 lexProgram()
+#print(lexedProgram)
