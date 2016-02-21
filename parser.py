@@ -116,6 +116,10 @@ def parseFunCall():
     if callToken.tokenType!=TokenTypes.Call:
         raise ParsingError(callToken)
     fName = program.pop(0)
+    # if this is actually a Chr, use the chr function instead
+    if fName.tokenType==TokenTypes.Chr:
+        parseChr()
+        return
     if fName.tokenType!=TokenTypes.Varname:
         raise ParsingError(fName)
     outputProgram+=fName.tokenValue
@@ -141,6 +145,24 @@ def parseFunCall():
     if c.tokenType!=TokenTypes.Close:
         raise ParsingError(c)
     outputProgram+=')'
+
+# OPEN Value CLOSE
+def parseChr():
+    o = program.pop(0)
+    if o.tokenType!=TokenTypes.Open:
+        raise ParsingError(o)
+    t=program[0]
+    outputProgram+='chr('
+    parseValue()
+    end = program.pop(0)
+    if end.tokenType!=TokenTypes.End:
+        raise ParsingError(end)
+    outputProgram+=pName.tokenValue
+    c = program.pop(0)
+    if c.tokenType!=TokenTypes.Close:
+        raise ParsingError(c)
+    outputProgram+=')'
+    
 
 
 # FunDef => DEF FVARNAME OPEN (VARNAME END)* CLOSE OPEN (Stmt END)* CLOSE
