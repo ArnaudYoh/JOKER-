@@ -4,26 +4,28 @@ Program => (Stmt END)*
 
 Stmt => Assignment | Deal | Funcall | FunDef | If | While | Return
 
-Assignment => VARNAME MathExpr
+Assignment => VARNAME OPEN MathExpr CLOSE
 
-MathExpr => (VARNAME|VALUE|Funcall) AddSub
+MathExpr => Value AddSub
 
-AddSub => empty | (PLUS | MINUS) (VARNAME|VALUE|Funcall) AddSub
+Value => (VARNAME|VALUE|Funcall)
+
+AddSub => empty | (PLUS | MINUS) Value AddSub
 
 Deal => DEAL VARNAME
 
-Funcall => CALL FVARNAME OPEN (VARNAME END)* CLOSE //(VARNAME END)* being the parameters
+FunCall => CALL (FVARNAME|CHR) OPEN (VARNAME END)* CLOSE //(VARNAME END)* being the parameters
 
 FunDef => DEF FVARNAME OPEN (VARNAME END)* CLOSE OPEN Stmt* CLOSE
 
-If => IF BoolExpr OPEN (Stmt END)* CLOSE // No else for now
+If => IF BoolExprs OPEN (Stmt END)* CLOSE // No else for now
 
 While => WHILE BoolExprs OPEN (Stmt END)* CLOSE
 
 BoolExprs => NOT? BoolExpr AndOr
 
-AndOr => (AND | OR) NOT? BoolExpr AndOr
+AndOr => empty | (AND | OR) BoolExprs
 
-BoolExpr => (VARNAME | VALUE | Funcall) (GT | LT | EQ) (VARNAME | VALUE|Funcall)
+BoolExpr => Value (GT | LT | EQ) Value
 
-Return => RETURN OPEN (VARNAME | VALUE | Funcall)? CLOSE
+Return => RETURN OPEN Value? CLOSE
