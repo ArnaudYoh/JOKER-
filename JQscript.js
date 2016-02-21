@@ -14,7 +14,7 @@ var getsuit = function(){
 var getnumber = function(target){
 	for(i = 2; i<11; i++){
 		var tempclass = "."+i; 
-		if(target.hasClass(tempclass)){
+		if(target.hasClass(tempclass)){ 
 			return i; 
 		}
 	}
@@ -192,7 +192,8 @@ var main = function(){
 		}
 	}); 
 
-	$('.cards').click(function(event){ 
+	$('.A').click(function(event){ 
+		console.log($(this).hasClass('.A')); 
 		var target = $(this); 
 		writecard(target);
 	}); 
