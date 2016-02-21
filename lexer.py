@@ -1,19 +1,22 @@
 import sys
 from enum import Enum
 
-# read program from inputted file and remove whitespace
-fileName = sys.argv[1]
-inputFile = open(fileName)
-rawProgram = inputFile.read()
-rawProgram = [c for c in rawProgram if not c.isspace() and c!='\n' and c!=' ' and c!='\t']
-# list of tokens in program
-lexedProgram=[]
+def lexEVERYTHING(data):
+    # read program from inputted file and remove whitespace
+    rawProgram = data
+    rawProgram = [c for c in rawProgram if not c.isspace() and c!='\n' and c!=' ' and c!='\t']
+    # list of tokens in program
+    lexedProgram=[]
+
+    lexedProgram = lexProgram(rawProgram, lexedProgram)
+    print(lexedProgram)
+
 
 
 cardValues = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0]
 
-def lexProgram():
+def lexProgram(rawProgram, lexedProgram):
     # if not in the middle of parsing a number
     currentlyLexingNumber=False
     # if not in the middle of parsing a var/function name
@@ -40,6 +43,7 @@ def lexProgram():
             #print(suit)
         except IndexError:
             print("Invalid program")
+            return
         if suit!='♦' and currentlyLexingName:
             lexedProgram.append(Token(TokenTypes.Varname, valueSoFar))
             valueSoFar=None
@@ -109,6 +113,7 @@ def lexProgram():
                 # TODO: look up card in card mapping and return the appropriate token
                 lexedProgram.append(Token(thisOne))
         i+=4
+    return lexedProgram
 
 def readNumber(value):
     # convert card value to decimal
@@ -150,6 +155,3 @@ class TokenTypes(Enum):
     Gt=19
     Lt=20
     Times=21
-
-lexProgram()
-print(lexedProgram)
