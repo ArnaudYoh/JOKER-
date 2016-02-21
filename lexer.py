@@ -5,7 +5,7 @@ from enum import Enum
 fileName = sys.argv[1]
 inputFile = open(fileName)
 rawProgram = inputFile.read()
-rawProgram = [c for c in rawProgram if not c.isspace()]
+rawProgram = [c for c in rawProgram if not c.isspace() and c!='\n' and c!=' ' and c!='\t']
 # list of tokens in program
 lexedProgram=[]
 
@@ -25,9 +25,9 @@ def lexProgram():
     while i<len(rawProgram):
         try:
             value=rawProgram[i]
-            if rawProgram[i+1]=='0':
+            if rawProgram[i+2]=='0':
                 value+='0'
-                i+=1
+                i+=2
             suit="".join(rawProgram[i+1:i+4])
             if suit=='\x00e&':
                 suit='♥'
@@ -152,4 +152,4 @@ class TokenTypes(Enum):
     Times=21
 
 lexProgram()
-#print(lexedProgram)
+print(lexedProgram)

@@ -217,6 +217,7 @@ def parseFunDef():
     print(program)
     c = program.pop(0)
     if c.tokenType!=TokenTypes.Close:
+        print(program)
         raise ParsingError(c)
     indent-=1
 
