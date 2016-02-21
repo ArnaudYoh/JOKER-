@@ -10,8 +10,8 @@ def hello():
  
 @app.route("/echo", methods=['POST'])
 def echo(): 
-	#text =request.form['input']
-	data = request.form['input']
+    #text =request.form['input']
+    data = request.form['input']
 
     return render_template('random.html', text=request.form['input'])
  
