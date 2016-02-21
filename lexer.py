@@ -34,6 +34,7 @@ def lexProgram():
         elif suit!='♥' and currentlyLexingNumber:
             lexedProgram.append(Token(TokenTypes.Number, valueSoFar))
             valueSoFar=None
+
         # if it's a number, lex it all
         if suit=='♥':
             try:
@@ -42,22 +43,67 @@ def lexProgram():
                 if value=='A':
                     thisValue=1
                 elif value=='J':
-                    # TODO: continue
+                    thisValue=11
+                elif value=='Q':
+                    thisValue=12
+                elif value=='K':
+                    thisValue=0
+    # TODO: continue?? Or should we not?
                     pass
             if valueSoFar==None:
                 valueSoFar= thisValue
             valueSoFar = valueSoFar*13 + thisValue
+
         # if it's a var name, lex it all
         elif suit=='♦':
             thisValue= None# TODO lex value
             if valueSoFar==None:
                 valueSoFar = thisValue
             valueSoFar = valueSoFar + thisValue
+
         else:
+            thisOne=None
             if value=='A' and suit=='♠':
                 thisOne=TokenTypes.End
-            thisOne=1# TODO: look up card in card mapping and return the appropriate token
-            lexedProgram.append(Token(thisone))
+            elif value=='A' and suit=='♣':
+                thisOne=TokenTypes.Deal
+            elif value=='Q' and suit=='♠':
+                thisOne=TokenTypes.Open
+            elif value=='K' and suit=='♠':
+                thisOne=TokenTypes.Close
+            elif value=='K' and suit=='♣':
+                thisOne=TokenTypes.Chr
+            elif value=='9' and suit=='♣':
+                thisOne=TokenTypes.Gt
+            elif value=='8' and suit=='♠':
+                thisOne=TokenTypes.While
+            elif value=='8' and suit=='♣':
+                thisOne=TokenTypes.Eq
+            elif value=='7' and suit=='♣':
+                thisOne=TokenTypes.Not
+            elif value=='6' and suit=='♠':
+                thisOne=TokenTypes.If
+            elif value=='6' and suit=='♣':
+                thisOne=TokenTypes.Or
+            elif value=='5' and suit=='♣':
+                thisOne=TokenTypes.And
+            elif value=='3' and suit=='♠':
+                thisOne=TokenValue.Def
+            elif value=='3' and suit=='♣':
+                thisOne=TokenTypes.Minus
+            elif value=='2' and suit=='♠':
+                thisOne=TokenValue.Call
+            elif value=='2' and suit=='♣':
+                thisOne=TokenTypes.Plus
+            """
+            elif value=='10' and suit=='♣':
+                thisOne=TokenTypesself.Lt
+            elif value=='10' and suit=='♠':
+                thisOne==TokenTypes.Return
+            """
+            elif thisOne!=None:
+                # TODO: look up card in card mapping and return the appropriate token
+                lexedProgram.append(Token(thisone))
         i+=1
 
 
