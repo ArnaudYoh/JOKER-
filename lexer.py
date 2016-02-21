@@ -6,7 +6,6 @@ fileName = sys.argv[1]
 inputFile = open(fileName)
 rawProgram = inputFile.read()
 rawProgram = [c for c in rawProgram if not c.isspace()]
-print(rawProgram)
 # list of tokens in program
 lexedProgram=[]
 
@@ -29,7 +28,6 @@ def lexProgram():
             if rawProgram[i+1]=='0':
                 value+='0'
                 i+=1
-            print(value)
             suit="".join(rawProgram[i+1:i+4])
             if suit=='\x00e&':
                 suit='♥'
@@ -87,22 +85,21 @@ def lexProgram():
             elif value=='7' and suit=='♣':
                 thisOne=TokenTypes.Not
             elif value=='6' and suit=='♠':
-                print("hi")
                 thisOne=TokenTypes.If
             elif value=='6' and suit=='♣':
                 thisOne=TokenTypes.Or
             elif value=='5' and suit=='♣':
                 thisOne=TokenTypes.And
             elif value=='3' and suit=='♠':
-                thisOne=TokenValue.Def
+                thisOne=TokenTypes.Def
             elif value=='3' and suit=='♣':
                 thisOne=TokenTypes.Minus
             elif value=='2' and suit=='♠':
-                thisOne=TokenValue.Call
+                thisOne=TokenTypes.Call
             elif value=='2' and suit=='♣':
                 thisOne=TokenTypes.Plus
             elif value=='10' and suit=='♣':
-                thisOne=TokenTypesself.Lt
+                thisOne=TokenTypes.Lt
             elif value=='10' and suit=='♠':
                 thisOne==TokenTypes.Return
             
@@ -152,4 +149,4 @@ class TokenTypes(Enum):
     Lt=20
 
 lexProgram()
-print(lexedProgram)
+#print(lexedProgram)

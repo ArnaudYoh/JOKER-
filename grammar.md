@@ -12,11 +12,11 @@ Value => (VARNAME|VALUE|Funcall)
 
 AddSub => empty | (PLUS | MINUS) Value AddSub
 
-Deal => DEAL VARNAME
+Deal => DEAL Value
 
 FunCall => CALL (FVARNAME|CHR) OPEN (VARNAME END)* CLOSE //(VARNAME END)* being the parameters
 
-FunDef => DEF FVARNAME OPEN (VARNAME END)* CLOSE OPEN Stmt* CLOSE
+FunDef => DEF FVARNAME OPEN (VARNAME END)* CLOSE OPEN (Stmt END)* CLOSE
 
 If => IF BoolExprs OPEN (Stmt END)* CLOSE // No else for now
 
