@@ -6,10 +6,13 @@ fileName = sys.argv[1]
 inputFile = open(fileName)
 rawProgram = inputFile.read()
 rawProgram = [c for c in rawProgram if not c.isspace()]
-
+print(rawProgram)
 # list of tokens in program
 lexedProgram=[]
 
+
+cardValues = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0]
 
 def lexProgram():
     # if not in the middle of parsing a number
@@ -19,48 +22,50 @@ def lexProgram():
     # value so far if in the middle of parsing a multicard thing
     valueSoFar=None
 
-    for i in range(0,len(rawProgram)):
+    i=0
+    while i<len(rawProgram):
         try:
             value=rawProgram[i]
             if rawProgram[i+1]=='0':
                 value+='0'
                 i+=1
-            suit=rawProgram[i+1]
+            print(value)
+            suit="".join(rawProgram[i+1:i+4])
+            if suit=='\x00e&':
+                suit='♥'
+            elif suit=='\x00f&':
+                suit='♦'
+            elif suit=="\x00'&":
+                suit='♠'
+            elif suit=="\x00e&":
+                suit='♣'
+            #print(suit)
         except IndexError:
             print("Invalid program")
         if suit!='♦' and currentlyLexingName:
             lexedProgram.append(Token(TokenTypes.Varname, valueSoFar))
             valueSoFar=None
+            currentlyLexingName=False
         elif suit!='♥' and currentlyLexingNumber:
             lexedProgram.append(Token(TokenTypes.Number, valueSoFar))
             valueSoFar=None
-
+            currentlyLexingNumber=False
         # if it's a number, lex it all
         if suit=='♥':
-            try:
-                thisValue=int(value)
-            except ValueError:
-                if value=='A':
-                    thisValue=1
-                elif value=='J':
-                    thisValue=11
-                elif value=='Q':
-                    thisValue=12
-                elif value=='K':
-                    thisValue=0
-    # TODO: continue?? Or should we not?
-                    pass
+            thisValue=readNumber(value)
             if valueSoFar==None:
                 valueSoFar= thisValue
-            valueSoFar = valueSoFar*13 + thisValue
-
+            else:
+                valueSoFar = valueSoFar*13 + thisValue
+            currentlyLexingNumber=True
         # if it's a var name, lex it all
         elif suit=='♦':
-            thisValue= None# TODO lex value
-            if valueSoFar==None:
-                valueSoFar = thisValue
-            valueSoFar = valueSoFar + thisValue
-
+            if value in cardValues:
+                if valueSoFar==None:
+                    valueSoFar = 'v'+value
+                else:
+                    valueSoFar = valueSoFar + value
+                currentlyLexingName=True
         else:
             thisOne=None
             if value=='A' and suit=='♠':
@@ -95,16 +100,20 @@ def lexProgram():
                 thisOne=TokenValue.Call
             elif value=='2' and suit=='♣':
                 thisOne=TokenTypes.Plus
-            """
             elif value=='10' and suit=='♣':
                 thisOne=TokenTypesself.Lt
             elif value=='10' and suit=='♠':
                 thisOne==TokenTypes.Return
-            """
-            elif thisOne!=None:
+            
+            if thisOne!=None:
                 # TODO: look up card in card mapping and return the appropriate token
                 lexedProgram.append(Token(thisone))
-        i+=1
+        i+=4
+
+def readNumber(value):
+    # convert card value to decimal
+    if value in cardValues:
+        return nums[cardValues.index(value)]
 
 
 class Token(object):
@@ -113,7 +122,7 @@ class Token(object):
         self.tokenValue=tokenValue
 
     def __str__(self):
-        return str(self.tokenType)+','+str(self.tokenValue)
+        return '<'+str(self.tokenType)+','+str(self.tokenValue)+'>'
 
     def __repr__(self):
         return str(self)
@@ -140,3 +149,6 @@ class TokenTypes(Enum):
     Eq=18
     Gt=19
     Lt=20
+
+lexProgram()
+print(lexedProgram)
