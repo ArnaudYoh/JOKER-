@@ -1,13 +1,16 @@
 import os
+import subprocess
 
-from lexer import Token, TokenTypes, lexedProgram as program
+from lexer import Token, TokenTypes, lexEVERYTHING
 
 indent=0
 outputProgram=''
-
+program=''
 # Program => (Stmt END)*
-def parseProgram():
+def parseProgram(data):
     global outputProgram
+    global program
+    program = lexEVERYTHING(data)
     while True:
         try:
             token = program[0]
@@ -19,10 +22,25 @@ def parseProgram():
         except IndexError:
             return
 
+    #print(outputProgram)
 
+    # temporarily save this to a python file
+    tempFile = open('temp.py', 'w')
+    tempFile.truncate()
+    tempFile.write(outputProgram)
+    tempFile.close()
+    # run the generated python file
+    output = subprocess.check_output("python temp.py")
+    # remove the temporary python file
+    os.remove('temp.py')
+
+
+
+parseProgram('2♦Q♠3♥K♠')
 # Stmt => Assignment | Deal | Funcall | FunDef | If | While | Return
 def parseStmt():
     global outputProgram
+    global program
     global indent
     token = program[0]
     tokentype = token.tokenType
@@ -50,6 +68,7 @@ def parseStmt():
 def parseAssignment():
     global outputProgram
     global indent
+    global program
     varname=program.pop(0)
     if varname.tokenType!=TokenTypes.Varname:
         raise ParsingError(varname)
@@ -72,6 +91,7 @@ def parseMathExpr():
 # Value => (VARNAME|VALUE|Funcall)
 def parseValue():
     global outputProgram
+    global program
     global indent
     token = program[0]
     if token.tokenType==TokenTypes.Varname or token.tokenType==TokenTypes.Number:
@@ -87,6 +107,7 @@ def parseValue():
 def parseAddSub():
     global outputProgram
     global indent
+    global program
     if program[0].tokenType in [TokenTypes.Plus, TokenTypes.Minus, TokenTypes.Times]:
         symbol = program.pop(0)
         if symbol.tokenType==TokenTypes.Plus:
@@ -102,6 +123,7 @@ def parseAddSub():
 # Deal => DEAL Value
 def parseDeal():
     global outputProgram
+    global program
     global indent
     deal = program.pop(0)
     if deal.tokenType!=TokenTypes.Deal:
@@ -114,6 +136,7 @@ def parseDeal():
 # FunCall => CALL FVARNAME OPEN (VARNAME END)* CLOSE //(VARNAME END)* being the parameters
 def parseFunCall():
     global outputProgram
+    global program
     global indent
     callToken = program.pop(0)
     if callToken.tokenType!=TokenTypes.Call:
@@ -152,6 +175,7 @@ def parseFunCall():
 # OPEN Value END CLOSE
 def parseChr():
     global outputProgram
+    global program
     global indent
     o = program.pop(0)
     if o.tokenType!=TokenTypes.Open:
@@ -172,6 +196,7 @@ def parseChr():
 def parseFunDef():
     global outputProgram
     global indent
+    global program
     defToken = program.pop(0)
     if defToken.tokenType!=TokenTypes.Def:
         raise ParsingError(defToken)
@@ -226,6 +251,7 @@ def parseFunDef():
 def parseIf():
     global outputProgram
     global indent
+    global program
     ifToken = program.pop(0)
     if ifToken.tokenType!=TokenTypes.If:
         raise ParsingError(ifToken)
@@ -254,6 +280,7 @@ def parseIf():
 def parseWhile():
     global outputProgram
     global indent
+    global program
     whileToken = program.pop(0)
     if whileToken.tokenType!=TokenTypes.Deal:
         raise ParsingError(whileToken)
@@ -282,6 +309,7 @@ def parseWhile():
 def parseBoolExprs():
     global outputProgram
     global indent
+    global program
     t = program[0]
     # if there is the optional not
     if t.tokenType==TokenTypes.Not:
@@ -295,6 +323,7 @@ def parseBoolExprs():
 def parseAndOr():
     global outputProgram
     global indent
+    global program
     if program[0].tokenType in [TokenTypes.And, TokenTypes.Or]:
         symbol = program.pop(0)
         if symbol.tokenType==TokenTypes.And:
@@ -307,6 +336,7 @@ def parseAndOr():
 # BoolExpr => Value (GT | LT | EQ) Value
 def parseBoolExpr():
     global outputProgram
+    global program
     global indent
     outputProgram+='('
     parseValue()
@@ -326,6 +356,7 @@ def parseBoolExpr():
 # Return => RETURN OPEN Value? CLOSE
 def parseReturn():
     global outputProgram
+    global program
     global indent
     retSymbol = program.pop(0)
     if retSymbol.tokenType!=TokenTypes.Return:
@@ -348,16 +379,3 @@ class ParsingError(Exception):
     def __str__(self):
         return repr(self.value)
 
-
-parseProgram()
-#print(outputProgram)
-
-# temporarily save this to a python file
-tempFile = open('temp.py', 'w')
-tempFile.truncate()
-tempFile.write(outputProgram)
-tempFile.close()
-# run the generated python file
-os.system("python temp.py")
-# remove the temporary python file
-os.remove('temp.py')
