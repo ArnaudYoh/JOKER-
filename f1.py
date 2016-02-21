@@ -10,13 +10,13 @@ def hello():
  
 @app.route("/echo", methods=['POST'])
 def echo(): 
-	#text =request.form['input']
+    #text =request.form['input']
     data = request.form['input']
     try:
-    	result = parseProgram(data)
+        result = parseProgram(data)
     except:
-    	print("lol it didn't work")
-    	result=3
+        print("lol it didn't work")
+        result=3
     return render_template('random.html', result=result)
  
  
