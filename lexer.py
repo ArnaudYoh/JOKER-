@@ -6,10 +6,13 @@ fileName = sys.argv[1]
 inputFile = open(fileName)
 rawProgram = inputFile.read()
 rawProgram = [c for c in rawProgram if not c.isspace()]
-
+print(rawProgram)
 # list of tokens in program
 lexedProgram=[]
 
+
+cardValues = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0]
 
 def lexProgram():
     # if not in the middle of parsing a number
@@ -19,23 +22,34 @@ def lexProgram():
     # value so far if in the middle of parsing a multicard thing
     valueSoFar=None
 
-    for i in range(0,len(rawProgram)):
+    i=0
+    while i<len(rawProgram):
         try:
             value=rawProgram[i]
             if rawProgram[i+1]=='0':
                 value+='0'
                 i+=1
-            suit=rawProgram[i+1]
+            print(value)
+            suit="".join(rawProgram[i+1:i+4])
+            if suit=='\x00e&':
+                suit='♥'
+            elif suit=='\x00f&':
+                suit='♦'
+            elif suit=="\x00'&":
+                suit='♠'
+            elif suit=="\x00e&":
+                suit='♣'
+            #print(suit)
         except IndexError:
             print("Invalid program")
         if suit!='♦' and currentlyLexingName:
             lexedProgram.append(Token(TokenTypes.Varname, valueSoFar))
             valueSoFar=None
-            currentlyLexingName=false
+            currentlyLexingName=False
         elif suit!='♥' and currentlyLexingNumber:
             lexedProgram.append(Token(TokenTypes.Number, valueSoFar))
             valueSoFar=None
-            currentlyLexingNumber=false
+            currentlyLexingNumber=False
         # if it's a number, lex it all
         if suit=='♥':
             thisValue=readNumber(value)
@@ -43,36 +57,37 @@ def lexProgram():
                 valueSoFar= thisValue
             else:
                 valueSoFar = valueSoFar*13 + thisValue
-            currentlyLexingNumber=true
+            currentlyLexingNumber=True
         # if it's a var name, lex it all
         elif suit=='♦':
             if value in cardValues:
-                thisValue=value
                 if valueSoFar==None:
-                    valueSoFar = thisValue
-                valueSoFar = valueSoFar + thisValue
-                currentlyLexingName=true
+                    valueSoFar = 'v'+value
+                else:
+                    valueSoFar = valueSoFar + value
+                currentlyLexingName=True
         else:
             if value=='A' and suit=='♠':
                 thisOne=TokenTypes.End
+            elif value=='Q' and suit=='♠':
+                thisOne=TokenTypes.Open
             thisOne=1# TODO: look up card in card mapping and return the appropriate token
-            lexedProgram.append(Token(thisone))
-        i+=1
+            lexedProgram.append(Token(thisOne))
+        i+=4
 
-# convert card value to decimal
-cardValues = (A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K)
-nums = (1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, 0)
 def readNumber(value):
+    # convert card value to decimal
     if value in cardValues:
-        return int(nums[cardValues.index(value)], 13)
-        
+        return nums[cardValues.index(value)]
+
+
 class Token(object):
     def __init__(self, tokenType, tokenValue=None):
         self.tokenType=tokenType
         self.tokenValue=tokenValue
 
     def __str__(self):
-        return str(self.tokenType)+','+str(self.tokenValue)
+        return '<'+str(self.tokenType)+','+str(self.tokenValue)+'>'
 
     def __repr__(self):
         return str(self)
@@ -99,3 +114,6 @@ class TokenTypes(Enum):
     Eq=18
     Gt=19
     Lt=20
+
+lexProgram()
+print(lexedProgram)
