@@ -61,4 +61,21 @@ class Token(object):
 class TokenTypes(Enum):
     Varname=1
     Number=2
-    # TODO the rest
+    End=3
+    Open=4
+    Close=5
+    Call=6
+    Def=7
+    If=8
+    While=9
+    Return=10
+    Chr=11
+    Deal=12
+    Plus=13
+    Minus=14
+    And=15
+    Or=16
+    Not=17
+    Eq=18
+    Gt=19
+    Lt=20
