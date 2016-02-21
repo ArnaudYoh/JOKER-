@@ -35,9 +35,9 @@ def lexProgram():
                 suit='♥'
             elif suit=='\x00f&':
                 suit='♦'
-            elif suit=="\x00'&":
+            elif suit=='\x00`&':
                 suit='♠'
-            elif suit=="\x00e&":
+            elif suit=="\x00c&":
                 suit='♣'
             #print(suit)
         except IndexError:
@@ -87,6 +87,7 @@ def lexProgram():
             elif value=='7' and suit=='♣':
                 thisOne=TokenTypes.Not
             elif value=='6' and suit=='♠':
+                print("hi")
                 thisOne=TokenTypes.If
             elif value=='6' and suit=='♣':
                 thisOne=TokenTypes.Or
@@ -107,7 +108,7 @@ def lexProgram():
             
             if thisOne!=None:
                 # TODO: look up card in card mapping and return the appropriate token
-                lexedProgram.append(Token(thisone))
+                lexedProgram.append(Token(thisOne))
         i+=4
 
 def readNumber(value):
@@ -122,7 +123,7 @@ class Token(object):
         self.tokenValue=tokenValue
 
     def __str__(self):
-        return '<'+str(self.tokenType)+','+str(self.tokenValue)+'>'
+        return '<'+str(self.tokenType)+(','+str(self.tokenValue) if self.tokenValue!=None else '')+'>'
 
     def __repr__(self):
         return str(self)
