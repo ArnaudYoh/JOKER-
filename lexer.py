@@ -29,25 +29,34 @@ def lexProgram():
         except IndexError:
             print("Invalid program")
         if suit!='♦' and currentlyLexingName:
-            lexedProgram.append(Token(TokenTypes.varname, valueSoFar))
+            lexedProgram.append(Token(TokenTypes.Varname, valueSoFar))
             valueSoFar=None
         elif suit!='♥' and currentlyLexingNumber:
-            lexedProgram.append(Token(TokenTypes.number, valueSoFar))
+            lexedProgram.append(Token(TokenTypes.Number, valueSoFar))
             valueSoFar=None
         # if it's a number, lex it all
         if suit=='♥':
-            thisValue=# TODO lex value
+            try:
+                thisValue=int(value)
+            except ValueError:
+                if value=='A':
+                    thisValue=1
+                elif value=='J':
+                    # TODO: continue
+                    pass
             if valueSoFar==None:
-                valueSoFar= thisValue#TODO replace with newly lexed value
-            valueSoFar = valueSoFar*13 + thisValue#TODO replace with newly lexed value
+                valueSoFar= thisValue
+            valueSoFar = valueSoFar*13 + thisValue
         # if it's a var name, lex it all
         elif suit=='♦':
-            thisValue=# TODO lex value
+            thisValue= None# TODO lex value
             if valueSoFar==None:
-                valueSoFar= thisValue#TODO replace with newly lexed value
-            valueSoFar = valueSoFar + thisValue#TODO replace with newly lexed value
+                valueSoFar = thisValue
+            valueSoFar = valueSoFar + thisValue
         else:
-            thisOne=# TODO: look up card in card mapping and return the appropriate token
+            if value=='A' and suit=='♠':
+                thisOne=TokenTypes.End
+            thisOne=1# TODO: look up card in card mapping and return the appropriate token
             lexedProgram.append(Token(thisone))
         i+=1
 
@@ -57,8 +66,31 @@ class Token(object):
         self.tokenType=tokenType
         self.tokenValue=tokenValue
 
+    def __str__(self):
+        return str(self.tokenType)+','+str(self.tokenValue)
+
+    def __repr__(self):
+        return str(self)
+
 
 class TokenTypes(Enum):
-    varname=1
-    number=2
-    # TODO the rest
+    Varname=1
+    Number=2
+    End=3
+    Open=4
+    Close=5
+    Call=6
+    Def=7
+    If=8
+    While=9
+    Return=10
+    Chr=11
+    Deal=12
+    Plus=13
+    Minus=14
+    And=15
+    Or=16
+    Not=17
+    Eq=18
+    Gt=19
+    Lt=20
