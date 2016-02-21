@@ -11,7 +11,7 @@
 
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src='script.js'></script>	
+		<script type="text/javascript" src='JQscript.js'></script>	
 		<meta charset="utf-8">		
 	</head>	
 	<body>
@@ -35,35 +35,34 @@
 				</button>	 
 			</div>
 			<div class="suits row">
-				<div class="col-md-1 col-md-offset-1">
-					<button class="suit-button btn btn-death"> 
+				<div class="col-xs-4 col-xs-offset-1 col-sm-3 col-sm-offset-2 col-md-1 col-md-offset-1 col-lg-1 col-lg-offset-1">
+					<button class="spadebtn suit-button btn btn-death"> 
 					<p class="btntext">♠ Spade</p>
 					</button>
 				</div>
-				<div class="col-md-2 col-md-offset-1">
-					<button class="suit-button btn btn-death"> 
+				<div class="col-xs-4 col-xs-offset-2 col-sm-3 col-sm-offset-2 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+					<button class="clubbtn suit-button btn btn-death"> 
 					<p class="btntext">♣ Club</p>
 					</button>
 				</div>
-				<div class="col-md-1 col-md-offset-2">
-					<button class="suit-button btn btn-sm btn-danger"> 
+				<div class="col-xs-4 col-xs-offset-1 col-sm-3 col-sm-offset-2 col-md-1 col-md-offset-2 col-lg-1 col-lg-offset-2">
+					<button class="heartbtn suit-button btn btn-sm btn-danger"> 
 					<p class="btntext">♥ Heart</p>
 					</button>
 				</div>
-				<div class="col-md-2 col-md-offset-1">
-					<button class="suit-button btn btn-sm btn-danger"> 
+				<div class="col-xs-4 col-xs-offset-2 col-sm-3 col-sm-offset-2 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+					<button class="diamondbtn suit-button btn btn-sm btn-danger"> 
 					<p class="btntext">♦ Diamond</p>
 					</button>
 				</div>
 			</div>
-			<div class="row cards">
-				<table>
-					<tr>
-						<td>♠</td>
-					</tr>	
-					<tr>
-						<td>A</td>
-					</tr>	
+			<div class="cardtable row spade" >
+				<table align="center">
+					<tbody>
+						<tr class="to_append" style="text-align: center">
+						</tr>
+					</tbody>
+				</table>		
 			</div>
 		</div>
 
