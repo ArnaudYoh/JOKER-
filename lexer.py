@@ -31,28 +31,27 @@ def lexProgram():
         if suit!='♦' and currentlyLexingName:
             lexedProgram.append(Token(TokenTypes.Varname, valueSoFar))
             valueSoFar=None
+            currentlyLexingName=false
         elif suit!='♥' and currentlyLexingNumber:
             lexedProgram.append(Token(TokenTypes.Number, valueSoFar))
             valueSoFar=None
+            currentlyLexingNumber=false
         # if it's a number, lex it all
         if suit=='♥':
-            try:
-                thisValue=int(value)
-            except ValueError:
-                if value=='A':
-                    thisValue=1
-                elif value=='J':
-                    # TODO: continue
-                    pass
+            thisValue=readNumber(value)
             if valueSoFar==None:
                 valueSoFar= thisValue
-            valueSoFar = valueSoFar*13 + thisValue
+            else:
+                valueSoFar = valueSoFar*13 + thisValue
+            currentlyLexingNumber=true
         # if it's a var name, lex it all
         elif suit=='♦':
-            thisValue= None# TODO lex value
-            if valueSoFar==None:
-                valueSoFar = thisValue
-            valueSoFar = valueSoFar + thisValue
+            if value in cardValues:
+                thisValue=value
+                if valueSoFar==None:
+                    valueSoFar = thisValue
+                valueSoFar = valueSoFar + thisValue
+                currentlyLexingName=true
         else:
             if value=='A' and suit=='♠':
                 thisOne=TokenTypes.End
@@ -60,7 +59,13 @@ def lexProgram():
             lexedProgram.append(Token(thisone))
         i+=1
 
-
+# convert card value to decimal
+cardValues = (A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K)
+nums = (1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, 0)
+def readNumber(value):
+    if value in cardValues:
+        return int(nums[cardValues.index(value)], 13)
+        
 class Token(object):
     def __init__(self, tokenType, tokenValue=None):
         self.tokenType=tokenType
